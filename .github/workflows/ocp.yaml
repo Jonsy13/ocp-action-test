@@ -1,0 +1,25 @@
+name: ocp-test-Pipeline
+on:
+  workflow_dispatch:
+
+# Jobs for deploying and testing litmus-portal on a KinD Cluster
+jobs:
+  Openshift-deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Installing CRC
+        run: |
+          wget https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz
+          tar xvf crc-linux-amd64.tar.xz
+          cp ./crc-linux-*-amd64/crc ~/bin
+          export PATH=$PATH:$HOME/bin
+          echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+          crc config set consent-telemetry no
+          crc version
+      
+      - name: Setting Up OCP cluster
+        run: |
+          crc setup
+          crc start
