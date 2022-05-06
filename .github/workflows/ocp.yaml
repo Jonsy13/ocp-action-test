@@ -13,6 +13,7 @@ jobs:
         run: |
           wget https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/crc/latest/crc-linux-amd64.tar.xz
           tar xvf crc-linux-amd64.tar.xz
+          mkdir -p ~/bin
           cp ./crc-linux-*-amd64/crc ~/bin
           export PATH=$PATH:$HOME/bin
           echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
